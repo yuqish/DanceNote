@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--Context.getFilesDir().-->
+    <files-path name="images" path="/"/>
+    <!-- getCacheDir().-->
+    <cache-path name="images1" path="/" />
+    <!-- Environment.getExternalStorageDirectory().-->
+    <external-path name="dance_vids" path="/DCIM/Camera" />
+    <external-path name="dance_vids2" path="/" />
+    <!--Context#getExternalFilesDir(String) Context.getExternalFilesDir(null).   -->
+    <external-files-path name="images3" path="/" />
+    <!-- Context.getExternalCacheDir().  -->
+    <external-cache-path name="images4" path="/" />
+</paths>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+
+    <ImageView
+        android:id="@+id/musicitem_album_imgv"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:padding="5dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/musicitem_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/musicitem_album_imgv"
+        android:text="成都"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/musicitem_artist_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/musicitem_title_tv"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="2dp"
+        android:layout_toRightOf="@+id/musicitem_album_imgv"
+        android:text="赵雷" />
+
+</RelativeLayout>
