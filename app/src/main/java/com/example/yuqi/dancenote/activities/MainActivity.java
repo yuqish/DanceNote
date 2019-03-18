@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         eListView = findViewById(R.id.mElistview);
 
-        // 关于权限的代码
+        // start of permission code
         permissionHelper = new PermissionHelper(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
         permissionHelper.request(new PermissionHelper.PermissionCallback() {
             @Override
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onPermissionDeniedBySystem() called");
             }
         });
-// 权限代码结束
+// end of permission code
     }
 
     @Override
@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
                 group_pos = group_position;
                 Intent viewNoteIntent = new Intent(getApplicationContext(),NoteListActivity.class);
                 viewNoteIntent.putExtra("NOTE",note);
-                viewNoteIntent.putExtra("isNewNote",0);
                 startActivityForResult(viewNoteIntent,1);
                 return false;
             }
@@ -191,11 +190,11 @@ public class MainActivity extends AppCompatActivity {
                             note_group.get(group_pos).getNote().add(note);
                             child_pos = note_group.get(group_pos).getNote().size()-1;
                         }
+                        Utilities.saveInfo(MainActivity.this,note_group);
 
                         /* start NoteListActivity in new note mode */
                         Intent newNoteActivity = new Intent(getApplicationContext(), NoteListActivity.class);
                         newNoteActivity.putExtra("NOTE",note);
-                        newNoteActivity.putExtra("isNewNote",1);
                         startActivityForResult(newNoteActivity,1);
                     }
                 });
@@ -203,6 +202,72 @@ public class MainActivity extends AppCompatActivity {
                 builder.show();
                 break;
 
+            case R.id.action_import:
+                final EditText editText = new EditText(MainActivity.this);
+                editText.setText(getExternalFilesDir("").getAbsolutePath()+"/note1.bin");
+                AlertDialog.Builder inputDialog =
+                        new AlertDialog.Builder(MainActivity.this);
+                inputDialog.setTitle("Please enter the file location you wish to import").setView(editText);
+                inputDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            final AlertDialog.Builder normalDialog =
+                                    new AlertDialog.Builder(MainActivity.this);
+                            normalDialog.setTitle("Confirm");
+                            normalDialog.setMessage("Are you sure to continue?" +
+                                    "Import action will overwrite all existing data, please make sure existing data is saved");
+                            normalDialog.setPositiveButton("OK",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            ArrayList<GroupInfo> temp = Utilities.importFromFile(MainActivity.this,
+                                                    editText.getText().toString());
+                                            if(temp != null) {
+                                                note_group = temp;
+                                                Utilities.saveInfo(MainActivity.this, note_group);
+                                                onResume();
+                                            }
+                                        }
+                                    });
+                            normalDialog.setNegativeButton("Cancel", null);
+                            normalDialog.show();
+                        }
+                    });
+                inputDialog.setNegativeButton("Cancel", null);
+                inputDialog.show();
+                break;
+
+            case R.id.action_export:
+                final EditText editText1 = new EditText(MainActivity.this);
+                editText1.setText(getExternalFilesDir("").getAbsolutePath()+"/note1.bin");
+                AlertDialog.Builder inputDialog1 =
+                        new AlertDialog.Builder(MainActivity.this);
+                inputDialog1.setTitle("Please enter the file location you wish to export").setView(editText1);
+                inputDialog1.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        final AlertDialog.Builder normalDialog =
+                                new AlertDialog.Builder(MainActivity.this);
+                        normalDialog.setTitle("Confirm");
+                        normalDialog.setMessage("Are you sure to export to location:" +
+                                editText1.getText().toString() + "?");
+                        normalDialog.setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Utilities.exportFile(MainActivity.this, note_group,
+                                                editText1.getText().toString());
+                                    }
+                                });
+                        normalDialog.setNegativeButton("Cancel", null);
+                        normalDialog.show();
+                    }
+                });
+                inputDialog1.setNegativeButton("Cancel", null);
+                inputDialog1.show();
+                break;
         }
         return true;
     }

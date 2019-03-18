@@ -11,7 +11,12 @@ public class Note implements Serializable{
     private static final String TAG = "Note";
     private String mTitle;
     private ArrayList<Content> mContent;
-    private String music_path;
+
+        //music utilities
+        private String music_title;
+        private String music_path;
+        private int music_length;
+
     private ArrayList<PathObj> file_path = new ArrayList<>();
 
     public Note(String mTitle, ArrayList<Content> mContent) {
@@ -29,6 +34,10 @@ public class Note implements Serializable{
 
     public void setMusic_path(String music_path) { this.music_path = music_path; }
 
+    public void setMusic_length(int music_length) { this.music_length = music_length; }
+
+    public void setMusic_title(String music_title) { this.music_title = music_title; }
+
     public void setFile_path(ArrayList<PathObj> file_path) { this.file_path = file_path; }
 
     public String getmTitle() {
@@ -40,6 +49,10 @@ public class Note implements Serializable{
     }
 
     public String getMusic_path() { return music_path; }
+
+    public String getMusic_title() { return music_title; }
+
+    public int getMusic_length() { return music_length; }
 
     public ArrayList<PathObj> getFile_path() {
         return file_path;
@@ -91,10 +104,7 @@ public class Note implements Serializable{
                 return false;
             }
         }
-        /*if (!note.getMusic_path().equals(music_path)) {
-            Log.w(TAG, "enter false for music_path content different");
-            return false;
-        }*/
+
         Log.w(TAG, "no difference encountered");
         return true;
     }

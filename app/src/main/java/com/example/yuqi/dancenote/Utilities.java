@@ -1,6 +1,7 @@
 package com.example.yuqi.dancenote;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.example.yuqi.dancenote.data.Content;
 import com.example.yuqi.dancenote.data.GroupInfo;
@@ -60,5 +61,57 @@ public class Utilities {
         }
 
         return gi;
+    }
+
+    public static ArrayList<GroupInfo> importFromFile(Context context, String path){
+        ArrayList<GroupInfo> gi;
+
+        File file = new File(path);
+        //String suffix = path.substring(path.lastIndexOf(".") + 1);
+
+        if(file.exists()){
+
+            try{
+                ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
+                gi = (ArrayList<GroupInfo>)objectInputStream.readObject();
+
+            } catch(IOException | ClassNotFoundException e){
+                e.printStackTrace();;
+                Toast.makeText(context, "import data failed", Toast.LENGTH_SHORT).show();
+                return null;
+            }
+        }else{
+            Toast.makeText(context, "import data failed, file does not exist", Toast.LENGTH_SHORT).show();
+            return null;
+        }
+
+        Toast.makeText(context, "import data succeed!", Toast.LENGTH_SHORT).show();
+        return gi;
+    }
+
+    public static boolean exportFile(Context context, ArrayList<GroupInfo> gi, String path){
+        //File file = new File(path);
+        String suffix = path.substring(path.lastIndexOf(".") + 1);
+
+        /*if (!suffix.equals("bin")) {
+            Toast.makeText(context, "invalid file name, need to end with '.bin'", Toast.LENGTH_SHORT).show();
+            return false;
+        }*/
+
+        try{
+            ObjectOutputStream objectOutputStream= new ObjectOutputStream(
+                    new FileOutputStream(new File(path)));
+
+            objectOutputStream.writeObject(gi);
+
+        }catch(IOException e){
+            e.printStackTrace();;
+            Toast.makeText(context, "error exporting data",
+                    Toast.LENGTH_SHORT).show();
+            return false;  //tell the user sth went wrong (could only be the device run out of space)
+        }
+
+        Toast.makeText(context, "exporting to "+ path + " succeed!", Toast.LENGTH_SHORT).show();
+        return true;
     }
 }

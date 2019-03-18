@@ -14,7 +14,7 @@
         android:background="@drawable/list_background"
         android:gravity="center"
         android:padding="8dp"
-        android:text="历史记录"
+        android:text="xxx"
         android:textColor="@android:color/black"
         android:textSize="20sp"></TextView>
 

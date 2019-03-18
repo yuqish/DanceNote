@@ -58,10 +58,9 @@ public class NoteListActivity extends AppCompatActivity {
     private static final String TAG = "NoteListActivity";
     private ListView mNoteList;
     private TextView mTitle;
-    private Note note;
     private ArrayList<Content> list_content;
     private NoteContentAdapter na;
-    private int isNew;
+    private Note note;
     private String[] items1;
     private String[] items2 = { "Select Image From Gallery","Select Video From Gallery","Record a Video","URL Resource" };
     private String[] items3 = {"Open","Delete"};
@@ -76,17 +75,16 @@ public class NoteListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notelist);
         mNoteList = (ListView) findViewById(R.id.note_list);
-        mTitle = (TextView) findViewById(R.id.title) ;
-        note = (Note)getIntent().getSerializableExtra("NOTE");
-        isNew = getIntent().getIntExtra("isNewNote",0);
-        refreshList(); /*loading resource list to gallery*/
+        mTitle = (TextView) findViewById(R.id.title);
+        note = (Note) getIntent().getSerializableExtra("NOTE");
 
         if(note != null){
             mTitle.setText(note.getmTitle());
             list_content = note.getmContent();
         }else{
-            Log.w(TAG, "error getting note");
+            Log.w(TAG, "error getting note");  /*shouldn't be here*/
         }
+        refreshList(); /*loading resource list to gallery*/
 
         na = new NoteContentAdapter(this, R.layout.item_note_content, list_content, mListener);
         mNoteList.setAdapter(na);
@@ -96,11 +94,16 @@ public class NoteListActivity extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+    }
+
+    public Note getNote(){
+        return note;
     }
 
     private void refreshList(){
         ArrayList<PathObj> pathObjs = note.getFile_path();
-        items1 = new String[note.getFile_path().size()+1];
+        items1 = new String[pathObjs.size()+1];
 
         for (int i=0; i<items1.length-1; i++) {
             if (pathObjs.get(i).getMode() == 0) {   /* file path */
@@ -392,6 +395,7 @@ public class NoteListActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case CHOOSE_PHOTO:
                 if (resultCode == RESULT_OK) {
@@ -521,8 +525,9 @@ public class NoteListActivity extends AppCompatActivity {
         /*save data when pause*/
         Log.w(TAG, "enter onPause");
         Note note_old = note_group.get(group_pos).getNote().get(child_pos);
+        Log.w(TAG,"music name:"+note_old.getMusic_title());
 
-        if(!note_old.equals(note) || isNew == 1){
+        if(!note_old.equals(note)){
             Note note_new = new Note(note.getmTitle(),new ArrayList<Content>());
 
             String content_i;
@@ -540,14 +545,15 @@ public class NoteListActivity extends AppCompatActivity {
                 mode = pathObj.get(j).getMode();
                 note_new.addSingleFilePath(filePath_i, mode);
             }
-            //note_new.setMusic_path(note.getMusic_path());
+            note_new.setMusic_title(note_old.getMusic_title());
+            note_new.setMusic_path(note_old.getMusic_path());
+            note_new.setMusic_length(note_old.getMusic_length());
+
             note_group.get(group_pos).getNote().set(child_pos, note_new);
             Utilities.saveInfo(this, note_group);
             Log.w(TAG, "note updated");
             Toast.makeText(this, "note updated", Toast.LENGTH_SHORT).show();
 
-            /*Saved: not a new note anymore*/
-            isNew = 0;
         }
     }
 }

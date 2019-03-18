@@ -10,4 +10,11 @@
         android:icon="@android:drawable/ic_menu_add"
         android:orderInCategory="0"
         app:showAsAction="always" />
+
+    <item android:id="@+id/action_import"
+        android:title="import"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_export"
+        android:title="export"
+        app:showAsAction="never" />
 </menu>

@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class MusicListActivity extends AppCompatActivity {
         initListView();
 
         ListView musiclv = findViewById(R.id.list_music);
+        Button removebtn = findViewById(R.id.btn_remove_music);
         ma = new MusicAdapter(this, musicList); //create adapter
         musiclv.setAdapter(ma);
         musiclv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -46,9 +48,20 @@ public class MusicListActivity extends AppCompatActivity {
 
                 Intent intent = getIntent();
                 Bundle bundle = new Bundle();
-                bundle.putString("Music", music_selected.title);
+                bundle.putString("MusicTitle", music_selected.title);
+                bundle.putString("MusicPath", music_selected.path);
+                bundle.putInt("MusicLength",music_selected.length);
                 intent.putExtras(bundle);
                 setResult(10, intent);
+                finish();//activity ends
+            }
+        });
+
+        removebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = getIntent();
+                setResult(20, intent);
                 finish();//activity ends
             }
         });
