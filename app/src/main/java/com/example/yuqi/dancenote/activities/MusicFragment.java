@@ -1,7 +1,5 @@
 package com.example.yuqi.dancenote.activities;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -20,14 +18,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.yuqi.dancenote.R;
 import com.example.yuqi.dancenote.Utilities;
-import com.example.yuqi.dancenote.data.Music;
 import com.example.yuqi.dancenote.data.Note;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.IOException;

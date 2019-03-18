@@ -22,7 +22,6 @@ import com.example.yuqi.dancenote.adapters.MusicAdapter;
 import com.example.yuqi.dancenote.data.Music;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class MusicListActivity extends AppCompatActivity {

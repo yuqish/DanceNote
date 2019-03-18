@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -30,7 +28,6 @@ import com.example.yuqi.dancenote.adapters.NoteAdapter;
 import com.example.yuqi.dancenote.R;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import com.master.permissionhelper.PermissionHelper;
 
 public class MainActivity extends AppCompatActivity {

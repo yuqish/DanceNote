@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -37,15 +35,8 @@ import com.example.yuqi.dancenote.data.Note;
 import com.example.yuqi.dancenote.data.PathObj;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.InetAddress;
-import java.net.URL;
-import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import static com.example.yuqi.dancenote.activities.MainActivity.child_pos;
 import static com.example.yuqi.dancenote.activities.MainActivity.group_pos;
@@ -552,7 +543,7 @@ public class NoteListActivity extends AppCompatActivity {
             note_group.get(group_pos).getNote().set(child_pos, note_new);
             Utilities.saveInfo(this, note_group);
             Log.w(TAG, "note updated");
-            Toast.makeText(this, "note updated", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "note updated", Toast.LENGTH_SHORT).show();
 
         }
     }
