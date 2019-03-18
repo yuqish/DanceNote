@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -201,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.action_import:
                 final EditText editText = new EditText(MainActivity.this);
-                editText.setText(getExternalFilesDir("").getAbsolutePath()+"/note1.bin");
+                editText.setText(Environment.getExternalStorageDirectory()+"/note1.bin");
                 AlertDialog.Builder inputDialog =
                         new AlertDialog.Builder(MainActivity.this);
                 inputDialog.setTitle("Please enter the file location you wish to import").setView(editText);
@@ -237,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.action_export:
                 final EditText editText1 = new EditText(MainActivity.this);
-                editText1.setText(getExternalFilesDir("").getAbsolutePath()+"/note1.bin");
+                editText1.setText(Environment.getExternalStorageDirectory()+"/note1.bin");
                 AlertDialog.Builder inputDialog1 =
                         new AlertDialog.Builder(MainActivity.this);
                 inputDialog1.setTitle("Please enter the file location you wish to export").setView(editText1);
